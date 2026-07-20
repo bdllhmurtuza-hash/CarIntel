@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CarIntel | AI Used Car Evaluation</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+   <!-- Lenis temporarily disabled -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/bundled/lenis.min.js"></script> -->
+
+</head>
+
+<body>
+
+<header class="hero hero-stage">
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            Car<span>Intel</span>
+        </div>
+
+        <ul class="nav-links">
+
+            <li><a href="#">Home</a></li>
+
+            <li><a href="#">Features</a></li>
+
+            <li><a href="#how-it-works">How It Works</a></li>
+
+            <li><a href="#">Evaluate</a></li>
+
+            <li><a href="#">About</a></li>
+
+        </ul>
+
+        <a href="#" class="btn-primary">
+            Get Started
+        </a>
+
+    </nav>
+
+    <!-- Hero Content -->
+
+    <div class="hero-content">
+
+        <div class="hero-left">
+            <p class="hero-tag">AI Powered Used Car Intelligence</p>
+            <h1>Know the True Value<br>of Any Used Car</h1>
+            <p class="hero-description">
+                AI-powered valuation, depreciation forecasting,
+                intelligent recommendations and real-time market
+                insights—all in one premium platform.
+            </p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">Evaluate Car</a>
+                <a href="#" class="btn-secondary">Learn More</a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div id="car-container" class="car-placeholder"></div>
+        </div>
+
+    </div>
+
+    <div class="scroll-indicator">
+        <span></span>
+        <p>Scroll</p>
+    </div>
+
+<!-- End of hero header -->
+</header>
+<div class="hero-scroll-spacer" aria-hidden="true"></div>
+
+<section class="ai-section" id="why-carintel">
+
+    <div class="section-header">
+        <p class="section-tag">WHY CarIntel ?</p>
+        <h2>AI-Powered Intelligence for Smarter Car Decisions</h2>
+        <p class="section-subtitle">
+            Discover real market value, predict future pricing, and receive intelligent recommendations powered by machine learning.
+        </p>
+    </div>
+    <div class="particle-background" id="particle-background"></div>
+    <div class="section-divider"></div>
+    <div class="features-wrapper">
+        <div class="glass-cards">
+
+            <div class="glass-card">
+                <h3>Market Analysis</h3>
+                <p>Our AI studies thousands of vehicle data points to estimate realistic market value.</p>
+                <div class="card-details">
+                    <ul>
+                        <li>Market trend analysis</li>
+                        <li>Regional price comparison</li>
+                        <li>Demand & supply insights</li>
+                        <li>Depreciation history</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h3>Price Prediction</h3>
+                <p>Predict fair pricing based on age, mileage, brand and market trends.</p>
+                <div class="card-details">
+                    <ul>
+                        <li>AI valuation model</li>
+                        <li>Future price forecast</li>
+                        <li>Confidence score</li>
+                        <li>Key pricing factors</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="glass-card">
+                <h3>Smart Recommendations</h3>
+                <p>Discover whether a vehicle is worth buying or overpriced.</p>
+                <div class="card-details">
+                    <ul>
+                        <li>Best-value alternatives</li>
+                        <li>Buy or wait suggestions</li>
+                        <li>Similar vehicle matching</li>
+                        <li>Personalized AI insights</li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</section>
+
+<section class="how-section" id="how-it-works">
+
+    <div class="section-header">
+        <p class="section-tag">HOW IT WORKS</p>
+        <h2>How Our AI Evaluates Your Vehicle</h2>
+        <p class="section-subtitle">
+            From vehicle details to intelligent insights, CarIntel analyzes every factor to help you make smarter decisions.
+        </p>
+    </div>
+
+    <div class="steps">
+
+        <div class="step">
+            <span>01</span>
+            <h3>Enter Details</h3>
+            <p>Add vehicle information.</p>
+        </div>
+
+        <div class="step">
+            <span>02</span>
+            <h3>AI Analysis</h3>
+            <p>Machine learning evaluates the car.</p>
+        </div>
+
+        <div class="step">
+            <span>03</span>
+            <h3>Get Insights</h3>
+            <p>Receive price and recommendations.</p>
+        </div>
+
+    </div>
+    <div class="how-cta">
+        <p class="how-cta-text">Ready to Evaluate Your Vehicle?</p>
+        <a href="#" class="btn-primary">Start AI Evaluation →</a>
+        <p class="how-cta-note">
+            Powered by Machine Learning • 15,000+ Vehicles Analysed
+        </p>
+    </div>
+</section>
+
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<script type="module" src="{{ url_for('static', filename='js/car-viewer.js') }}?v=5"></script>
+<script src="{{ url_for('static', filename='js/hero-animation.js') }}"></script>
+<script src="{{ url_for('static', filename='js/particles.js') }}"></script>
+<script src="{{ url_for('static', filename='js/card.js') }}"></script>
+</body>
+</html>
