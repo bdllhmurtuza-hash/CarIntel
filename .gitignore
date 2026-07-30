@@ -18,4 +18,10 @@ env/
 .env
 
 # IDE
-.vscode/
+.vscode/murtuzajaweed@Murtuzas-MacBook-Air CarIntel prototype % du -sh static/models/*
+ 64M	static/models/bmw.glb
+murtuzajaweed@Murtuzas-MacBook-Air CarIntel prototype % 
+
+.DS_Store
+
+node_modules/
