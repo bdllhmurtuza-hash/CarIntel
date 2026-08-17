@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Valuation Report | CarIntel</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/evaluate.css') }}">
+
+</head>
+
+<body class="eval-page">
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('home') }}" class="logo">
+            Car<span>Intel</span>
+        </a>
+
+        <ul class="nav-links">
+
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+
+            <li><a href="{{ url_for('home') }}#why-carintel">Features</a></li>
+
+            <li><a href="{{ url_for('home') }}#how-it-works">How It Works</a></li>
+
+            <li><a href="{{ url_for('evaluate') }}" class="active">Evaluate</a></li>
+
+            <li><a href="#">About</a></li>
+
+        </ul>
+
+        <a href="{{ url_for('evaluate') }}" class="btn-primary">
+            Get Started
+        </a>
+
+    </nav>
+
+    <!-- Valuation Report -->
+
+    <main class="result-main">
+
+        {% if vehicle and vehicle.get('make') %}
+
+        <header class="result-header">
+
+            <p class="section-tag reveal">Valuation Report</p>
+            <h1 class="eval-title reveal">Your Vehicle's Estimated Value</h1>
+            <p class="eval-subtitle reveal">
+                CarIntel's valuation pipeline is processing your vehicle details.
+                The report below is populated with model output once the ML pipeline is connected.
+            </p>
+
+            <div class="summary-chips reveal">
+                {% if vehicle.get('year') %}
+                <span class="chip">{{ vehicle.get('year') }} {{ vehicle.get('make') }} {{ vehicle.get('model') }}</span>
+                {% endif %}
+                {% if vehicle.get('kilometers') %}
+                <span class="chip">{{ vehicle.get('kilometers')|int|inr }} km</span>
+                {% endif %}
+                {% if vehicle.get('fuel_type') %}
+                <span class="chip">{{ vehicle.get('fuel_type') }}</span>
+                {% endif %}
+                {% if vehicle.get('transmission') %}
+                <span class="chip">{{ vehicle.get('transmission') }}</span>
+                {% endif %}
+                {% if vehicle.get('seller_type') %}
+                <span class="chip">{{ vehicle.get('seller_type') }} Seller</span>
+                {% endif %}
+                {% if vehicle.get('vehicle_age') %}
+                <span class="chip">{{ vehicle.get('vehicle_age') }} {{ 'Year' if vehicle.get('vehicle_age') == '1' else 'Years' }} Old</span>
+                {% endif %}
+            </div>
+
+            <div class="status-chip reveal">
+                <span class="pulse-dot"></span>
+                Awaiting Model Output
+            </div>
+
+        </header>
+
+        <div class="report-grid">
+
+            <section class="report-card reveal">
+                <p class="report-label"><span class="num">1</span> Estimated Price</p>
+                <div class="price-mark">
+                    <span class="currency-mark">$</span>
+                    <div class="skeleton big"></div>
+                </div>
+                <p class="report-hint">Predicted by XGBoost valuation model</p>
+            </section>
+
+            <section class="report-card reveal">
+                <p class="report-label"><span class="num">2</span> Expected Market Range</p>
+                <div class="skeleton md"></div>
+                <div class="skeleton md" style="margin-top:10px; width:64%;"></div>
+                <p class="report-hint">Lower &amp; upper market bounds</p>
+            </section>
+
+            <section class="report-card full reveal">
+                <p class="report-label"><span class="num">3</span> Explanation</p>
+                <div class="explain-skel">
+                    <div class="skeleton line"></div>
+                    <div class="skeleton line"></div>
+                    <div class="skeleton line"></div>
+                </div>
+                <p class="report-hint">SHAP-driven pricing factors will appear here</p>
+            </section>
+
+        </div>
+
+        <div class="result-actions reveal">
+            <a href="{{ url_for('evaluate') }}" class="btn-primary">Evaluate Another Vehicle</a>
+            <a href="{{ url_for('home') }}" class="btn-secondary">Back to Home</a>
+        </div>
+
+        <p class="result-footnote reveal">
+            Powered by CarIntel ML Pipeline &bull; XGBoost Valuation + SHAP Explanations
+        </p>
+
+        {% else %}
+
+        <header class="result-header">
+            <p class="section-tag">Valuation Report</p>
+            <h1 class="eval-title">No Vehicle Data Found</h1>
+            <p class="eval-subtitle">
+                Start a new evaluation to generate a valuation report.
+            </p>
+            <div class="result-actions">
+                <a href="{{ url_for('evaluate') }}" class="btn-primary">Start Evaluation →</a>
+            </div>
+        </header>
+
+        {% endif %}
+
+    </main>
+
+    <script src="{{ url_for('static', filename='js/result.js') }}"></script>
+
+</body>
+
+</html>

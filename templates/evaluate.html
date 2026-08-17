@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Evaluate Your Vehicle | CarIntel</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/animations.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/evaluate.css') }}">
+
+</head>
+
+<body class="eval-page" data-static="{{ url_for('static', filename='') }}">
+
+    <!-- Navigation -->
+
+    <nav class="navbar">
+
+        <a href="{{ url_for('home') }}" class="logo">
+            Car<span>Intel</span>
+        </a>
+
+        <ul class="nav-links">
+
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+
+            <li><a href="{{ url_for('home') }}#why-carintel">Features</a></li>
+
+            <li><a href="{{ url_for('home') }}#how-it-works">How It Works</a></li>
+
+            <li><a href="{{ url_for('evaluate') }}" class="active">Evaluate</a></li>
+
+            <li><a href="#">About</a></li>
+
+        </ul>
+
+
+    </nav>
+
+    <!-- Evaluation Wizard -->
+
+    <main class="eval-main">
+
+        <header class="eval-header compact-hero">
+            <!-- Phase 2 scaffold: presentational dashboard (placeholders only) -->
+            <div class="eval-dashboard">
+                <div class="eval-dashboard-left">
+                    <p class="eval-dashboard-tag">AI VEHICLE INTELLIGENCE</p>
+                    <h3 class="eval-dashboard-heading">Built on Real Market Data</h3>
+                    <p class="eval-dashboard-desc">CarIntel compares your vehicle against thousands of real listings to generate reliable market insights.</p>
+                    <div class="eval-dashboard-metrics">
+                        <div class="eval-dashboard-metric">15,218+ Cars Analyzed</div>
+                        <div class="eval-dashboard-metric">AI Powered Insights</div>
+                    </div>
+                </div>
+
+                <div class="eval-dashboard-right" aria-hidden="true">
+                    <div class="eval-dashboard-panel">
+                        <div class="eval-dashboard-panel-head">CarIntel Insights</div>
+                        <div class="eval-dashboard-panel-body">
+                            <div class="eval-dashboard-panel-top">
+                                <div class="engine-profile">
+                                    <div class="engine-title">Engine Distribution</div>
+                                    <div class="engine-visual">
+                                        <div class="eval-dashboard-chart engine-chart">
+                                            <canvas id="engineDonut" aria-label="Engine category breakdown" role="img"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="engine-summary">
+                                        <div class="engine-legend" aria-label="Engine legend">
+                                            <div class="legend-item"><span class="legend-swatch blue"></span><span>Small Engine</span><span class="legend-value">30%</span></div>
+                                            <div class="legend-item"><span class="legend-swatch orange"></span><span>Mid Engine</span><span class="legend-value">44%</span></div>
+                                            <div class="legend-item"><span class="legend-swatch green"></span><span>Heavy Engine</span><span class="legend-value">26%</span></div>
+                                        </div>
+                                        <div class="engine-divider" aria-hidden="true"></div>
+                                        <div class="engine-meta">
+                                            <div class="engine-percent" id="enginePercent">44%</div>
+                                            <div class="engine-label" id="engineLabel">Mid Engine</div>
+                                            <div class="engine-count" id="engineCount">6,765 vehicles</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="dataset-strength">
+                                    <div class="dataset-title">Dataset Strength</div>
+                                    <div class="dataset-main">
+                                        <div class="dataset-count" id="datasetCount">15,218+</div>
+                                        <div class="dataset-sub">Vehicles analyzed</div>
+                                    </div>
+                                    <div class="dataset-badges">
+                                        <span class="badge">✓ Cleaned Dataset</span>
+                                        <span class="badge">✓ ML Ready</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="brand-intel">
+                                <div class="brand-title">Popular Brands</div>
+                                <div class="eval-dashboard-chart brand-chart">
+                                    <canvas id="brandBars" aria-label="Top brand distribution" role="img"></canvas>
+                                </div>
+                                <div class="brand-legend" aria-label="Brand legend">
+                                    <span class="legend-item"><span class="legend-swatch blue"></span>Maruti</span>
+                                    <span class="legend-item"><span class="legend-swatch cyan"></span>Hyundai</span>
+                                    <span class="legend-item"><span class="legend-swatch slate"></span>Honda</span>
+                                    <span class="legend-item"><span class="legend-swatch violet"></span>Mahindra</span>
+                                    <span class="legend-item"><span class="legend-swatch teal"></span>Toyota</span>
+                                    <span class="legend-item"><span class="legend-swatch amber"></span>Ford</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Old oversized hero removed; compact eval-dashboard remains above -->
+        </header>
+
+        <form id="evalForm" class="wizard" action="{{ url_for('evaluate') }}" method="post" novalidate>
+
+            <!-- Progress -->
+
+            <div class="step-progress">
+                <div class="progress-track">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <div class="step-dots">
+                    <button type="button" class="step-dot active" data-step="1" aria-current="step">
+                        <span class="dot-num">1</span>
+                        <span class="dot-label">Brand</span>
+                    </button>
+                    <button type="button" class="step-dot blocked" data-step="2" disabled>
+                        <span class="dot-num">2</span>
+                        <span class="dot-label">Model</span>
+                    </button>
+                    <button type="button" class="step-dot blocked" data-step="3" disabled>
+                        <span class="dot-num">3</span>
+                        <span class="dot-label">Details</span>
+                    </button>
+                    <button type="button" class="step-dot blocked" data-step="4" disabled>
+                        <span class="dot-num">4</span>
+                        <span class="dot-label">Options</span>
+                    </button>
+                    <button type="button" class="step-dot blocked" data-step="5" disabled>
+                        <span class="dot-num">5</span>
+                        <span class="dot-label">Review</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 1 — Brand Selection -->
+
+            <section class="step-panel active" data-panel="1">
+
+                <div class="panel-heading">
+                    <h2>Choose Your Brand</h2>
+                    <p>Tap the brand you own — this shapes the models we show you next.</p>
+                </div>
+
+                <div class="search-box">
+                    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <path d="M21 21l-4.3-4.3"></path>
+                    </svg>
+                    <input type="text" id="brandSearch" placeholder="Search brands…" autocomplete="off" aria-label="Search brands">
+                </div>
+
+                <div class="brand-grid" id="brandGrid" role="radiogroup" aria-label="Car brands"></div>
+
+            </section>
+
+            <!-- Codex test -->
+            <!-- Step 2 — Model Selection -->
+
+            <section class="step-panel" data-panel="2">
+
+                <div class="panel-heading">
+                    <h2>Choose Your Model</h2>
+                    <p id="modelHint">Select the exact model you drive.</p>
+                </div>
+
+                <div class="selected-brand-bar" id="selectedBrandBar" hidden>
+                    <span class="brand-logo-tile sm" id="selectedBrandBadge"></span>
+                    <span class="selected-brand-name" id="selectedBrandName"></span>
+                    <button type="button" class="change-link" id="changeBrandBtn">Change brand</button>
+                </div>
+
+                <div class="model-grid" id="modelGrid" role="radiogroup" aria-label="Car models"></div>
+
+            </section>
+
+            <!-- Step 3 — Vehicle Details -->
+
+            <section class="step-panel" data-panel="3">
+
+                <div class="panel-heading">
+                    <h2>Tell Us About Your Car</h2>
+                    <p>Just a few details — our model does the heavy lifting from here.</p>
+                </div>
+
+                <div class="form-grid">
+
+                    <div class="field">
+                        <label for="year">Manufacturing Year <span class="req">*</span></label>
+                        <div class="year-row">
+                            <select class="select" id="year" name="year" required>
+                                <option value="" selected disabled>Select year</option>
+                            </select>
+                            <input type="hidden" name="vehicle_age" id="vehicleAge">
+                            <span class="age-badge" id="ageBadge" hidden></span>
+                        </div>
+                        <p class="error-msg">Please choose the model year.</p>
+                    </div>
+
+                    <div class="field full">
+                        <label for="kilometers">Kilometers Driven <span class="req">*</span></label>
+                        <div class="km-input-wrap">
+                            <input type="text" inputmode="numeric" id="kilometers" name="kilometers" placeholder="e.g. 50,000" autocomplete="off" required>
+                            <span class="km-suffix">km</span>
+                        </div>
+                        <p class="error-msg">Enter the kilometers driven.</p>
+                        <div class="km-presets" id="kmPresets">
+                            <button type="button" class="preset-chip" data-km="10000">10,000</button>
+                            <button type="button" class="preset-chip" data-km="25000">25,000</button>
+                            <button type="button" class="preset-chip" data-km="50000">50,000</button>
+                            <button type="button" class="preset-chip" data-km="75000">75,000</button>
+                            <button type="button" class="preset-chip" data-km="100000">1,00,000</button>
+                            <button type="button" class="preset-chip" data-km="150000">1,50,000</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- Step 4 — Technical Options -->
+
+            <section class="step-panel" data-panel="4">
+
+                <div class="panel-heading">
+                    <h2>Technical Options</h2>
+                    <p>Three quick choices that move the needle on price.</p>
+                </div>
+
+                <div class="choice-stack">
+
+                    <fieldset class="field group-field">
+                        <legend>Fuel Type <span class="req">*</span></legend>
+                        <div class="pill-group">
+                            <label class="choice-pill">
+                                <input type="radio" name="fuel_type" value="Petrol">
+                                <span class="choice-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 20V6a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v14"></path>
+                                        <path d="M3 20h12"></path>
+                                        <path d="M11 8h2v4h-2z"></path>
+                                        <path d="M13 11h3a1.5 1.5 0 0 1 1.5 1.5V18a1.5 1.5 0 0 0 3 0v-5l-2-2"></path>
+                                    </svg>
+                                </span>
+                                Petrol
+                            </label>
+                            <label class="choice-pill">
+                                <input type="radio" name="fuel_type" value="Diesel">
+                                <span class="choice-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 20V6a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v14"></path>
+                                        <path d="M3 20h12"></path>
+                                        <path d="M11 8h2v4h-2z"></path>
+                                        <path d="M13 11h3a1.5 1.5 0 0 1 1.5 1.5V18a1.5 1.5 0 0 0 3 0v-5l-2-2"></path>
+                                        <path d="M6 4l1.2 2.4M9 4l1.2 2.4"></path>
+                                    </svg>
+                                </span>
+                                Diesel
+                            </label>
+                            <label class="choice-pill">
+                                <input type="radio" name="fuel_type" value="CNG">
+                                <span class="choice-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 3c-4 4-6 6.5-6 10a6 6 0 0 0 12 0c0-3.5-2-6-6-10z"></path>
+                                        <path d="M12 16a3 3 0 0 1-3-3"></path>
+                                    </svg>
+                                </span>
+                                CNG
+                            </label>
+                        </div>
+                        <p class="error-msg">Please choose a fuel type.</p>
+                    </fieldset>
+
+                    <fieldset class="field group-field">
+                        <legend>Transmission <span class="req">*</span></legend>
+                        <div class="pill-group">
+                            <label class="choice-pill">
+                                <input type="radio" name="transmission" value="Manual">
+                                <span class="choice-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                        <path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"></path>
+                                        <path d="M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"></path>
+                                    </svg>
+                                </span>
+                                Manual
+                            </label>
+                            <label class="choice-pill">
+                                <input type="radio" name="transmission" value="Automatic">
+                                <span class="choice-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                        <path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"></path>
+                                        <path d="M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M18.7 5.3l-2.1 2.1M7.4 16.6l-2.1 2.1"></path>
+                                        <path d="M12 9l1.8 3L12 15l-1.8-3z"></path>
+                                    </svg>
+                                </span>
+                                Automatic
+                            </label>
+                        </div>
+                        <p class="error-msg">Select a transmission type.</p>
+                    </fieldset>
+
+                    <fieldset class="field group-field">
+                        <legend>Seller Type <span class="req">*</span></legend>
+                        <div class="pill-group">
+                            <label class="choice-pill">
+                                <input type="radio" name="seller_type" value="Dealer">
+                                <span class="choice-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="7" width="18" height="12" rx="2"></rect>
+                                        <path d="M3 11h18"></path>
+                                        <path d="M7 7V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"></path>
+                                    </svg>
+                                </span>
+                                Dealer
+                            </label>
+                            <label class="choice-pill">
+                                <input type="radio" name="seller_type" value="Individual">
+                                <span class="choice-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="8" r="4"></circle>
+                                        <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6"></path>
+                                    </svg>
+                                </span>
+                                Individual
+                            </label>
+                            <label class="choice-pill">
+                                <input type="radio" name="seller_type" value="Corporate">
+                                <span class="choice-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M3 21h18"></path>
+                                        <path d="M5 21V5a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"></path>
+                                        <path d="M15 9h2a2 2 0 0 1 2 2v10"></path>
+                                        <path d="M9 7h2M9 11h2M9 15h2"></path>
+                                    </svg>
+                                </span>
+                                Corporate
+                            </label>
+                        </div>
+                        <p class="error-msg">Please select a seller type.</p>
+                    </fieldset>
+
+                </div>
+
+            </section>
+
+            <!-- Step 5 — Review -->
+
+            <section class="step-panel" data-panel="5">
+
+                <div class="panel-heading">
+                    <h2>Review Your Selection</h2>
+                    <p>Confirm everything looks right before generating your AI valuation.</p>
+                </div>
+
+                <div id="reviewSummary"></div>
+
+                <div class="ai-summary-card">
+                    <span class="ai-summary-icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"></path>
+                            <path d="M18.5 15.5l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"></path>
+                        </svg>
+                    </span>
+                    <p class="ai-summary-text">
+                        CarIntel will compare your vehicle against <strong>15,000+ used vehicle records</strong>
+                        to estimate its fair market value.
+                    </p>
+                </div>
+
+            </section>
+
+            <!-- Navigation -->
+
+            <div class="wizard-nav">
+                <button type="button" class="btn-ghost" id="backBtn">← Back</button>
+                <button type="button" class="btn-primary" id="nextBtn">Continue →</button>
+                <button type="submit" class="btn-primary" id="submitBtn" hidden>✨ Generate AI Valuation</button>
+            </div>
+
+        </form>
+
+    </main>
+
+    <!-- AI Valuation Loader -->
+
+    <div class="ai-loader" id="aiLoader" role="status" aria-live="polite" hidden>
+
+        <div class="ai-loader-card">
+
+            <div class="ai-loader-ring">
+                <span class="ai-loader-mark" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 3l1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9z"></path>
+                        <path d="M18.5 15.5l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"></path>
+                    </svg>
+                </span>
+            </div>
+
+            <h3 class="ai-loader-title">Analyzing Your Vehicle</h3>
+
+            <p class="ai-loader-msg" id="loaderMsg"></p>
+
+            <div class="ai-loader-track">
+                <div class="ai-loader-fill" id="loaderFill"></div>
+            </div>
+
+            <p class="ai-loader-note">CarIntel &middot; XGBoost Valuation Engine</p>
+
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/evaluate.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="{{ url_for('static', filename='js/eval-dashboard.js') }}"></script>
+
+</body>
+
+</html>
