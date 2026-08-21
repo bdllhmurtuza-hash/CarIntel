@@ -403,6 +403,10 @@
 
         </form>
 
+        <div id="swift-model-wrapper">
+            <div id="swift-model-container" class="swift-model-container"></div>
+        </div>
+
     </main>
 
     <!-- AI Valuation Loader -->
@@ -434,6 +438,7 @@
 
     </div>
 
+    <script type="module" src="{{ url_for('static', filename='js/swift-viewer.js') }}"></script>
     <script src="{{ url_for('static', filename='js/evaluate.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="{{ url_for('static', filename='js/eval-dashboard.js') }}"></script>

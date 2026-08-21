@@ -12,6 +12,20 @@
     min-height:100vh;
 }
 
+#swift-model-container {
+    position: absolute !important;
+    top: 80px !important;
+    left: 50px !important;
+    width: 500px !important;
+    height: 400px !important;
+
+    background: rgba(255,0,0,0.3) !important;
+    border: 3px solid red !important;
+
+    overflow: visible !important;
+    z-index: 10 !important;
+}
+
 [hidden]{ display:none !important; }
 
 /* ---------- Shared page header ---------- */
