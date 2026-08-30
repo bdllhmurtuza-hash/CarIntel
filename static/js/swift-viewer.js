@@ -225,7 +225,7 @@ if (!container) {
 
 
             // Move car below CarIntel logo
-            car.position.x -= 0.1;
+            car.position.x -= 0.01;
 
             // Side profile: front of car faces right side of the page
             car.rotation.set(
@@ -236,7 +236,7 @@ if (!container) {
 
 
             // Correct the model’s intrinsic aspect ratio so it reads naturally in side profile
-            car.scale.set(1.0, 1.12, 0.9);
+            car.scale.set(1.32, 1.476, 1.188);
 
             scene.add(car);
 
