@@ -41,6 +41,9 @@ if (!container) {
         powerPreference: 'high-performance'
     });
 
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -205,6 +208,37 @@ if (!container) {
         (gltf)=>{
 
             const car = gltf.scene;
+
+           // Improve Swift body paint
+car.traverse((child) => {
+
+    if (child.isMesh && child.material) {
+
+        const materials = Array.isArray(child.material)
+            ? child.material
+            : [child.material];
+
+        materials.forEach((material) => {
+
+            console.log(
+                'MATERIAL:',
+                material.name,
+                'metalness:',
+                material.metalness,
+                'roughness:',
+                material.roughness
+            );
+
+            if (material.name === 'Exterior') {
+                material.metalness = 0.60;
+                material.roughness = 0.20;
+            }
+
+        });
+
+    }
+
+});
 
 
             const boundingBox =
