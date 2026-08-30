@@ -239,6 +239,7 @@ if (!container) {
             car.scale.set(1.32, 1.476, 1.188);
 
             scene.add(car);
+            window.swiftInitialY = car.position.y;
 
             console.log(container.clientWidth, container.clientHeight);
             console.log(car.position);
@@ -288,14 +289,20 @@ if (!container) {
 
     function animate(){
 
-        requestAnimationFrame(animate);
+    requestAnimationFrame(animate);
 
-        renderer.render(
-            scene,
-            camera
-        );
-
+    if (window.swiftModel && window.swiftInitialY !== undefined) {
+        window.swiftModel.position.y =
+            window.swiftInitialY +
+            Math.sin(Date.now() * 0.0015) * 0.05;
     }
+
+    renderer.render(
+        scene,
+        camera
+    );
+
+}
 
     animate();
 
