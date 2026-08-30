@@ -18,10 +18,6 @@
     left: 50px !important;
     width: 500px !important;
     height: 400px !important;
-
-    background: rgba(255,0,0,0.3) !important;
-    border: 3px solid red !important;
-
     overflow: visible !important;
     z-index: 10 !important;
 }
@@ -143,26 +139,28 @@
     width:100%;
 }
 .hero-brand-mark{
-    position:absolute;
-    top:10px;
-    left:5%;
-    transform:translateX(-50%);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:max-content;
-    max-width:100%;
-    padding-top:0;
-    font-family:'Poppins',sans-serif;
-    font-size:clamp(3.4rem, 4.8vw, 5.7rem);
-    font-weight:800;
-    letter-spacing:-.06em;
-    line-height:0.9;
-    text-align:center;
-    white-space:nowrap;
+   position:absolute;
+   top:10px;
+   left:0.1%;
+   transform:translateX(-50%);
+   display:flex;
+   align-items:center;
+   justify-content:center;
+   width:max-content;
+   max-width:100%;
+   padding-top:0;
+   font-family:'Poppins',sans-serif;
+   font-size:clamp(3.4rem, 4.8vw, 5.7rem);
+   font-weight:800;
+   letter-spacing:-.06em;
+   line-height:0.9;
+   text-align:center;
+   white-space:nowrap;
 }
+
 .hero-brand-mark .brand-car{ color:var(--primary); }
 .hero-brand-mark .brand-intel{ color:var(--accent); }
+
 
 /* Premium analytics panel */
 .eval-dashboard-panel{
