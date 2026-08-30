@@ -287,14 +287,21 @@ if (!container) {
 
     // ANIMATION
 
-    function animate(){
+// ANIMATION
+
+function animate(){
 
     requestAnimationFrame(animate);
 
     if (window.swiftModel && window.swiftInitialY !== undefined) {
+
         window.swiftModel.position.y =
             window.swiftInitialY +
             Math.sin(Date.now() * 0.0015) * 0.05;
+
+        window.swiftModel.rotation.y =
+            Math.PI / 2 +
+            Math.sin(Date.now() * 0.0015) * 0.03;
     }
 
     renderer.render(
@@ -304,7 +311,7 @@ if (!container) {
 
 }
 
-    animate();
+animate();
 
 
 
