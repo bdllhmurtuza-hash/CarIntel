@@ -43,6 +43,14 @@ body{
     linear-gradient(135deg,#0B0F19,#111827,#0F1115);
 }
 
+/* ab LOGOS */
+
+.logos{ 
+    font-family: 'Michroma', sans-serif;
+    font-size: 30px;
+}
+
+
 
 /* ===========================
       NAVIGATION
@@ -110,20 +118,17 @@ body{
 
 }
 
-.btn-primary{
+.btn-primary {
+    text-decoration: none;
+    color: white;
+    background: var(--accent);
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-weight: 600;
 
-    text-decoration:none;
-
-    color:white;
-
-    background:var(--accent);
-
-    padding:14px 28px;
-
-    border-radius:50px;
-
-    font-weight:600;
-
+    width: fit-content;
+    white-space: nowrap;
+    margin-left: 40px;
 }
 
 .btn-secondary{
@@ -679,4 +684,77 @@ html{
     radial-gradient(circle at 10% 20%, rgba(59,130,246,0.12), transparent 35%),
     radial-gradient(circle at 90% 80%, rgba(220,38,38,0.08), transparent 35%),
     #0F1115;
+}
+
+.scroll-indicator {
+    position: absolute;
+    left: auto;
+    right: 20px;
+    bottom: 30px;
+    transform: none;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+
+    opacity: 0.7;
+}
+
+.scroll-mouse {
+    width: 18px;
+    height: 30px;
+
+    border: 1.5px solid rgba(255, 255, 255, 0.8);
+    border-radius: 999px;
+
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+}
+
+.scroll-mouse span {
+    width: 3px;
+    height: 6px;
+
+    background: white;
+    border-radius: 999px;
+
+    animation: scrollDot 1.8s ease-in-out infinite;
+}
+
+.scroll-arrow {
+    width: 8px;
+    height: 8px;
+
+    border-right: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.7);
+
+    transform: rotate(45deg);
+
+    animation: arrowDown 1.8s ease-in-out infinite;
+}
+
+@keyframes scrollDot {
+    0%, 100% {
+        transform: translateY(0);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: translateY(7px);
+        opacity: 1;
+    }
+}
+
+@keyframes arrowDown {
+    0%, 100% {
+        transform: rotate(45deg) translate(0, 0);
+        opacity: 0.5;
+    }
+
+    50% {
+        transform: rotate(45deg) translate(3px, 3px);
+        opacity: 1;
+    }
 }

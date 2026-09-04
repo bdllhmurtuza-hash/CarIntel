@@ -56,6 +56,19 @@
     margin:6px 0 8px;
 }
 
+.logo {
+    font-family: 'Michroma', sans-serif;
+}
+
+.brand-intel{
+    font-family: 'Michroma', sans-serif;
+}
+
+.brand-car{
+    font-family: 'Michroma', sans-serif;
+}
+
+
 .hero-desc{
     color:var(--secondary);
     font-size:.95rem;
