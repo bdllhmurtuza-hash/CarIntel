@@ -1,3 +1,1 @@
-# CARINTEL
-
-> 🚧 **Project Status: Currently in Progress**
+<h1 align="center"> CURRENTLY IN PROGRESS ⚠️ </h1>
