@@ -169,8 +169,20 @@
         "F-Pace": "jaguar_fpace.png",
         "XF": "jaguar_xf.png",
         "XE": "jaguar_xe.png",
+        //Range Rover
 
-
+        //Lexus
+        "NX": "lexus-nx.png",
+        "RX": "lexus-rx.png",
+        "ES": "lexus-es.png",
+        //Bentley
+        "Continental": "bentley-continental.png",
+        //Datsun
+        "Go": "datsun-go.png",  
+        "RediGO": "datsun-redigo.png",
+        //Isuzu
+        "D-Max": "isuzu-dmax.png",
+        "MUX": "isuzu-mux.png"
 
 
 
