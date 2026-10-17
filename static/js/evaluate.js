@@ -692,8 +692,6 @@ function silhouetteHTML(style, model) {
         if (step === 2) renderModels();
         if (step === 5) renderReview();
         refreshNext();
-
-        window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     backBtn.addEventListener("click", function () {
