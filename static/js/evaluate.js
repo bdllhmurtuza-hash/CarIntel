@@ -580,6 +580,77 @@ function silhouetteHTML(style, model) {
         return el.value;
     }
 
+    function trimReviewCarImage(img) {
+        function trimTransparentPadding() {
+            if (!img.naturalWidth || !img.naturalHeight) return;
+
+            var source = document.createElement("canvas");
+            source.width = img.naturalWidth;
+            source.height = img.naturalHeight;
+
+            var sourceContext = source.getContext("2d", { willReadFrequently: true });
+            sourceContext.drawImage(img, 0, 0);
+
+            var pixels;
+            try {
+                pixels = sourceContext.getImageData(0, 0, source.width, source.height).data;
+            } catch (error) {
+                // Leave the original image in place if the browser cannot read it.
+                return;
+            }
+
+            var minX = source.width;
+            var minY = source.height;
+            var maxX = -1;
+            var maxY = -1;
+
+            for (var y = 0; y < source.height; y++) {
+                for (var x = 0; x < source.width; x++) {
+                    if (pixels[(y * source.width + x) * 4 + 3] > 8) {
+                        minX = Math.min(minX, x);
+                        minY = Math.min(minY, y);
+                        maxX = Math.max(maxX, x);
+                        maxY = Math.max(maxY, y);
+                    }
+                }
+            }
+
+            if (maxX < minX || maxY < minY) return;
+
+            var contentWidth = maxX - minX + 1;
+            var contentHeight = maxY - minY + 1;
+
+            // Keep source images that already use nearly their full canvas unchanged.
+            if (contentWidth / source.width > 0.9 && contentHeight / source.height > 0.9) return;
+
+            var padding = Math.round(Math.max(contentWidth, contentHeight) * 0.035);
+            var cropX = Math.max(0, minX - padding);
+            var cropY = Math.max(0, minY - padding);
+            var cropWidth = Math.min(source.width - cropX, maxX + padding + 1 - cropX);
+            var cropHeight = Math.min(source.height - cropY, maxY + padding + 1 - cropY);
+            var cropped = document.createElement("canvas");
+
+            cropped.width = cropWidth;
+            cropped.height = cropHeight;
+            cropped.getContext("2d").drawImage(
+                source,
+                cropX,
+                cropY,
+                cropWidth,
+                cropHeight,
+                0,
+                0,
+                cropWidth,
+                cropHeight
+            );
+
+            img.src = cropped.toDataURL("image/png");
+        }
+
+        if (img.complete) trimTransparentPadding();
+        else img.addEventListener("load", trimTransparentPadding, { once: true });
+    }
+
     function renderReview() {
         var wrap = document.getElementById("reviewSummary");
         if (!wrap) return;
@@ -588,6 +659,7 @@ function silhouetteHTML(style, model) {
         var model = getFieldValue("model");
         var brand = findBrand(make);
         var year = getFieldValue("year");
+        var carImage = CAR_IMAGES[model];
 
         var html = "";
 
@@ -600,6 +672,9 @@ function silhouetteHTML(style, model) {
                 '<p class="review-hero-sub">' + (year || "") + (year ? " · " : "") + (getFieldValue("fuel_type") || "") + "</p>" +
                 '<h3 class="review-hero-title">' + (make || "—") + " " + (model || "") + "</h3>" +
                 "</div>" +
+                (carImage
+                    ? '<div class="review-hero-vehicle"><img src="/static/cars/' + carImage + '" alt="' + escapeHTML(make + " " + model) + '" draggable="false"></div>'
+                    : "") +
                 "</div>";
         }
 
@@ -654,6 +729,9 @@ function silhouetteHTML(style, model) {
         });
 
         wrap.innerHTML = html;
+
+        var reviewCarImage = wrap.querySelector(".review-hero-vehicle img");
+        if (reviewCarImage) trimReviewCarImage(reviewCarImage);
 
         Array.prototype.forEach.call(wrap.querySelectorAll(".edit-btn"), function (btn) {
             btn.addEventListener("click", function () {
